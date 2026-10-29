@@ -1,0 +1,41 @@
+---
+import SidebarLayout from '../layouts/SidebarLayout.astro';
+import PostList from '../components/PostList.astro';
+import Pagination from '../components/Pagination.astro';
+import { site } from '../data/site';
+import { getHomePages } from '../utils/posts';
+
+const [{ posts, currentPage, totalPages }] = await getHomePages();
+---
+
+<SidebarLayout>
+  <section class="intro">
+    <h1>{site.name}</h1>
+    <p>{site.intro}</p>
+  </section>
+
+  <section aria-labelledby="latest">
+    <h2 id="latest" class="section-title">Latest posts</h2>
+    <PostList posts={posts} headingLevel={3} />
+    <Pagination currentPage={currentPage} totalPages={totalPages} />
+  </section>
+</SidebarLayout>
+
+<style>
+  .intro {
+    max-width: var(--measure);
+    margin-bottom: var(--space-7);
+  }
+  .intro p {
+    margin-top: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+  .section-title {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+import type { Post } from '../utils/posts';
+import { getCategory } from '../data/categories';
+import { formatDate, readingTime } from '../utils/format';
+
+interface Props {
+  post: Post;
+  headingLevel?: 2 | 3;
+}
+
+const { post, headingLevel = 2 } = Astro.props;
+const Heading = `h${headingLevel}` as const;
+const { title, description, pubDate, category, draft } = post.data;
+const cat = getCategory(category);
+---
+
+<article class="card">
+  <div class="meta">
+    <a class="category" href={`/categories/${cat.slug}`}>{cat.label}</a>
+    <span aria-hidden="true">&middot;</span>
+    <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+    <span aria-hidden="true">&middot;</span>
+    <span>{readingTime(post.body)}</span>
+    {draft && <span class="draft">Draft</span>}
+  </div>
+  <Heading class="title"><a href={`/posts/${post.id}`}>{title}</a></Heading>
+  <p class="description">{description}</p>
+</article>
+
+<style>
+  .card {
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+  }
+  .category {
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .draft {
+    padding: 0 var(--space-2);
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
+    color: var(--color-accent);
+  }
+  .title {
+    margin-top: var(--space-2);
+    font-size: var(--text-xl);
+  }
+  .title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .title a:hover {
+    color: var(--color-accent);
+  }
+  .description {
+    margin-top: var(--space-2);
+    max-width: var(--measure);
+    color: var(--color-text-muted);
+  }
+</style>

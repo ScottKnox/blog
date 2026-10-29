@@ -1,0 +1,39 @@
+---
+import SidebarLayout from '../../layouts/SidebarLayout.astro';
+import PostList from '../../components/PostList.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getHomePages, type HomePage } from '../../utils/posts';
+
+// Page 1 is the home page at `/`, so only pages 2+ are generated here.
+export async function getStaticPaths() {
+  const pages = await getHomePages();
+  return pages.slice(1).map((page) => ({
+    params: { page: String(page.currentPage) },
+    props: page,
+  }));
+}
+
+type Props = HomePage;
+
+const { posts, currentPage, totalPages } = Astro.props;
+---
+
+<SidebarLayout
+  title={`Latest posts, page ${currentPage}`}
+  description={`Older posts, page ${currentPage} of ${totalPages}.`}
+>
+  <h1>Latest posts <span class="page">Page {currentPage} of {totalPages}</span></h1>
+  <PostList posts={posts} />
+  <Pagination currentPage={currentPage} totalPages={totalPages} />
+</SidebarLayout>
+
+<style>
+  .page {
+    display: block;
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+</style>

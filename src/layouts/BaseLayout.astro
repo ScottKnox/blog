@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+import type { ComponentProps } from 'astro/types';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
+// Preloading the two Latin text fonts avoids a layout shift when they swap in.
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import newsreaderLatin from '@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url';
+
+type Props = ComponentProps<typeof SEO>;
+
+const hasSidebar = Astro.slots.has('sidebar');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0f1115" />
+    <link rel="preload" href={newsreaderLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <SEO {...Astro.props} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <div class:list={['page', { 'has-sidebar': hasSidebar }]}>
+      <main id="main">
+        <slot />
+      </main>
+      <slot name="sidebar" />
+    </div>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .page {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: var(--space-7) var(--space-5) 0;
+  }
+  .has-sidebar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+  @media (min-width: 64rem) {
+    .has-sidebar {
+      grid-template-columns: minmax(0, 1fr) var(--sidebar-width);
+      gap: var(--space-7);
+      align-items: start;
+    }
+  }
+</style>

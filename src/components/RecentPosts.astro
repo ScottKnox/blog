@@ -1,0 +1,15 @@
+---
+import SidebarSection from './SidebarSection.astro';
+import SidebarPostLinks from './SidebarPostLinks.astro';
+import { getRecentPosts } from '../utils/posts';
+
+const posts = await getRecentPosts(5);
+---
+
+{
+  posts.length > 0 && (
+    <SidebarSection title="Recent">
+      <SidebarPostLinks posts={posts} />
+    </SidebarSection>
+  )
+}

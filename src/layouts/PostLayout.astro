@@ -1,0 +1,172 @@
+---
+import { Image } from 'astro:assets';
+import SidebarLayout from './SidebarLayout.astro';
+import type { Post } from '../utils/posts';
+import { getCategory } from '../data/categories';
+import { formatDate, readingTime } from '../utils/format';
+
+interface Props {
+  post: Post;
+  prev?: Post;
+  next?: Post;
+}
+
+const { post, prev, next } = Astro.props;
+const { title, description, pubDate, updatedDate, category, heroImage, heroAlt, draft } = post.data;
+const cat = getCategory(category);
+---
+
+<SidebarLayout
+  title={title}
+  description={description}
+  type="article"
+  image={heroImage}
+  imageAlt={heroAlt}
+  publishedTime={pubDate}
+  modifiedTime={updatedDate}
+>
+  <article>
+    <header class="post-header">
+      <div class="meta">
+        <a class="category" href={`/categories/${cat.slug}`}>{cat.label}</a>
+        <span aria-hidden="true">&middot;</span>
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        {
+          updatedDate && (
+            <>
+              <span aria-hidden="true">&middot;</span>
+              <span>
+                Updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+              </span>
+            </>
+          )
+        }
+        <span aria-hidden="true">&middot;</span>
+        <span>{readingTime(post.body)}</span>
+        {draft && <span class="draft">Draft</span>}
+      </div>
+      <h1>{title}</h1>
+      <p class="lede">{description}</p>
+    </header>
+
+    {
+      heroImage && (
+        <Image class="hero" src={heroImage} alt={heroAlt ?? ''} widths={[720, 1080, 1440]} sizes="(min-width: 760px) 720px, 100vw" loading="eager" />
+      )
+    }
+
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+
+  {
+    (prev || next) && (
+      <nav class="pager" aria-label="More posts">
+        {prev ? (
+          <a class="prev" href={`/posts/${prev.id}`} rel="prev">
+            <span class="label">Previous</span>
+            <span class="title">{prev.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )}
+        {next && (
+          <a class="next" href={`/posts/${next.id}`} rel="next">
+            <span class="label">Next</span>
+            <span class="title">{next.data.title}</span>
+          </a>
+        )}
+      </nav>
+    )
+  }
+</SidebarLayout>
+
+<style>
+  .post-header {
+    max-width: var(--measure);
+    margin-bottom: var(--space-6);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+  }
+  .category {
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--text-xs);
+  }
+  .draft {
+    padding: 0 var(--space-2);
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
+    color: var(--color-accent);
+    font-size: var(--text-xs);
+  }
+  .lede {
+    margin-top: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+  .hero {
+    width: 100%;
+    max-width: var(--measure);
+    margin-bottom: var(--space-6);
+    border-radius: var(--radius);
+  }
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    max-width: var(--measure);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-sans);
+  }
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    text-decoration: none;
+    transition: border-color var(--transition);
+  }
+  .pager a:hover {
+    border-color: var(--color-accent);
+  }
+  .pager .next {
+    grid-column: 2;
+    text-align: right;
+  }
+  .label {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .pager .title {
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  @media (max-width: 40rem) {
+    .pager {
+      grid-template-columns: 1fr;
+    }
+    .pager .next {
+      grid-column: 1;
+    }
+  }
+</style>

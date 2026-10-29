@@ -1,0 +1,55 @@
+---
+import type { Post } from '../utils/posts';
+import { formatDate } from '../utils/format';
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+---
+
+<ul class="links">
+  {
+    posts.map((post) => {
+      const href = `/posts/${post.id}`;
+      return (
+        <li>
+          <a href={href} aria-current={currentPath === href ? 'page' : undefined}>
+            {post.data.title}
+          </a>
+          <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .links {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: 1.4;
+  }
+  li {
+    display: grid;
+    gap: 0.15rem;
+  }
+  a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  a:hover,
+  a[aria-current='page'] {
+    color: var(--color-accent);
+  }
+  time {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>

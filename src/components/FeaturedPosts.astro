@@ -1,0 +1,16 @@
+---
+import SidebarSection from './SidebarSection.astro';
+import SidebarPostLinks from './SidebarPostLinks.astro';
+import { getFeaturedPosts } from '../utils/posts';
+
+const FEATURED_LIMIT = 4;
+const posts = await getFeaturedPosts(FEATURED_LIMIT);
+---
+
+{
+  posts.length > 0 && (
+    <SidebarSection title="Featured">
+      <SidebarPostLinks posts={posts} />
+    </SidebarSection>
+  )
+}

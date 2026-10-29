@@ -1,0 +1,71 @@
+---
+import SidebarLayout from '../../layouts/SidebarLayout.astro';
+import { getCategoriesWithPosts } from '../../utils/posts';
+
+const entries = await getCategoriesWithPosts();
+---
+
+<SidebarLayout title="Categories" description="Browse posts by category.">
+  <h1>Categories</h1>
+  <ul class="categories">
+    {
+      entries.map(({ category, posts }) => (
+        <li>
+          <a href={`/categories/${category.slug}`}>
+            <span class="name">{category.label}</span>
+            <span class="count">
+              {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+            </span>
+          </a>
+          <p>{category.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</SidebarLayout>
+
+<style>
+  .categories {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    transition: border-color var(--transition);
+  }
+  li:hover {
+    border-color: var(--color-accent);
+  }
+  a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    font-family: var(--font-sans);
+    text-decoration: none;
+  }
+  .name {
+    color: var(--color-text);
+    font-size: var(--text-lg);
+    font-weight: 650;
+  }
+  a:hover .name {
+    color: var(--color-accent);
+  }
+  .count {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+  p {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-base);
+  }
+</style>

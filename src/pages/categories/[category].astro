@@ -1,0 +1,49 @@
+---
+import SidebarLayout from '../../layouts/SidebarLayout.astro';
+import PostList from '../../components/PostList.astro';
+import type { Category } from '../../data/categories';
+import { getCategoriesWithPosts, type Post } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const entries = await getCategoriesWithPosts();
+  return entries.map(({ category, posts }) => ({
+    params: { category: category.slug },
+    props: { category, posts },
+  }));
+}
+
+interface Props {
+  category: Category;
+  posts: Post[];
+}
+
+const { category, posts } = Astro.props;
+---
+
+<SidebarLayout title={category.label} description={category.description}>
+  <p class="eyebrow"><a href="/categories">Categories</a></p>
+  <h1>{category.label}</h1>
+  <p class="description">{category.description}</p>
+  <PostList posts={posts} />
+</SidebarLayout>
+
+<style>
+  .eyebrow {
+    margin-bottom: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .eyebrow a {
+    text-decoration: none;
+  }
+  .description {
+    max-width: var(--measure);
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+</style>

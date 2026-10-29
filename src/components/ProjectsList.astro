@@ -1,0 +1,52 @@
+---
+import SidebarSection from './SidebarSection.astro';
+import { projects } from '../data/projects';
+---
+
+{
+  projects.length > 0 && (
+    <SidebarSection title="Projects">
+      <ul class="projects">
+        {projects.map((p) => (
+          <li>
+            <a href={p.url} rel="noopener">
+              {p.name}
+              <span class="external" aria-hidden="true">&nearr;</span>
+            </a>
+            <p>{p.description}</p>
+          </li>
+        ))}
+      </ul>
+    </SidebarSection>
+  )
+}
+
+<style>
+  .projects {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: 1.4;
+  }
+  a {
+    color: var(--color-text);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--color-accent);
+  }
+  .external {
+    margin-left: 0.2em;
+    color: var(--color-text-muted);
+    font-size: 0.85em;
+  }
+  p {
+    margin-top: 0.15rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>

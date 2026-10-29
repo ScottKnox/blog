@@ -1,0 +1,35 @@
+---
+import type { Post } from '../utils/posts';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  posts: Post[];
+  headingLevel?: 2 | 3;
+}
+
+const { posts, headingLevel } = Astro.props;
+---
+
+{
+  posts.length > 0 ? (
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li>
+          <PostCard post={post} headingLevel={headingLevel} />
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="empty">No posts yet.</p>
+  )
+}
+
+<style>
+  .post-list {
+    padding: 0;
+    list-style: none;
+  }
+  .empty {
+    color: var(--color-text-muted);
+  }
+</style>

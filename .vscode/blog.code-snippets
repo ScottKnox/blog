@@ -1,0 +1,36 @@
+{
+  // Type the prefix in a Markdown/MDX file, then press Ctrl+Space (or run "Insert Snippet").
+  // Valid categories are listed in src/data/categories.ts; a wrong one fails the build.
+  "New blog post": {
+    "scope": "markdown,mdx",
+    "prefix": "post",
+    "description": "Frontmatter for a new blog post (starts as a draft)",
+    "body": [
+      "---",
+      "title: '${1:Post title}'",
+      "description: '${2:One or two sentences for lists, search results, and social cards.}'",
+      "pubDate: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "category: ${3:engineering}",
+      "featured: ${4|false,true|}",
+      "draft: ${5|true,false|}",
+      "---",
+      "",
+      "$0"
+    ]
+  },
+  "Image with caption": {
+    "scope": "mdx",
+    "prefix": "figure",
+    "description": "Optimized image with a caption (MDX posts only)",
+    "body": [
+      "import { Image } from 'astro:assets';",
+      "import ${1:image} from '../../assets/${2:file.png}';",
+      "",
+      "<figure>",
+      "  <Image src={$1} alt=\"${3:Describe what the image shows.}\" />",
+      "  <figcaption>${4:Caption}</figcaption>",
+      "</figure>",
+      "$0"
+    ]
+  }
+}
