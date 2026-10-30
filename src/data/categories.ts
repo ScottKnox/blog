@@ -6,6 +6,11 @@ export const categories = [
     description: 'Building software: design, code, and trade-offs.',
   },
   {
+    slug: 'ai',
+    label: 'AI',
+    description: 'Cutting through AI hype and nonsense.',
+  },
+  {
     slug: 'tools',
     label: 'Tools',
     description: 'Editors, terminals, workflows, and the stuff in between.',

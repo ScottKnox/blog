@@ -7,13 +7,8 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    name: 'Project One',
-    description: 'A one-line description of the project.',
-    url: 'https://github.com/your-username/project-one',
-  },
-  {
-    name: 'Project Two',
-    description: 'Another short description.',
-    url: 'https://github.com/your-username/project-two',
+    name: 'SoloConverter',
+    description: 'Ultra-fast, 100% private image conversion tool.',
+    url: 'https://www.soloconverter.com',
   },
 ];

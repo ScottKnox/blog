@@ -9,9 +9,10 @@ import { projects } from '../data/projects';
       <ul class="projects">
         {projects.map((p) => (
           <li>
-            <a href={p.url} rel="noopener">
+            <a href={p.url} target="_blank" rel="noopener noreferrer">
               {p.name}
               <span class="external" aria-hidden="true">&nearr;</span>
+              <span class="sr-only">(opens in a new tab)</span>
             </a>
             <p>{p.description}</p>
           </li>

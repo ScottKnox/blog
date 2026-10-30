@@ -1,22 +1,19 @@
 // PLACEHOLDER values: replace with real details.
-import photo from '../assets/profile-placeholder.svg';
+import photo from '../assets/profile-photo.jpg';
 
 export const site = {
-  name: 'Your Name',
-  title: 'Your Name',
+  name: 'ScottDiesel.dev',
+  title: 'Scott Diesel',
   description: 'Thoughts on software engineering.',
   intro:
-    "Hi, I'm Your Name, a software engineer. I write here about building software, the tools I use, and what I learn along the way.",
-  shortBio: 'Software engineer writing about building software, tools, and the craft.',
+    "Hi, I'm Scott Diesel. Welcome to my humble abode, where I'll share thoughts on AI hype, the future of software engineering, and my overall journey in a career that changed almost overnight.",
+  shortBio: '12 years engineering distributed systems for large tech companies, and federal government agencies.',
   longBio: [
-    "I'm Your Name, a software engineer. This is a placeholder bio: replace it with a few paragraphs about who you are, what you work on, and what you care about.",
-    'Mention the kinds of problems you like solving, the technologies you enjoy, and what readers can expect from this blog.',
-    'Finish with how people can reach you.',
+    "Most people know me as The Scott Diesel. I've been building software for 12 years, for everyone from fireworks companies, to a number of agencies within the federal goverment. Many thoughts cross my mind during this journey, and need a place to go that isn't inundated with advertisements, or that slaps users with a paywall halfway through my post. Feel free to bookmark me, or grab that RSS feed.",
   ],
   photo,
-  photoAlt: 'Placeholder profile photo',
+  photoAlt: 'The Scott Diesel profile photo',
   socialLinks: [
-    { label: 'GitHub', href: 'https://github.com/your-username' },
-    { label: 'Email', href: 'mailto:you@example.com' },
+    { label: 'Email', href: 'mailto:417digital@gmail.com' },
   ],
 };
