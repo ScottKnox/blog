@@ -93,6 +93,7 @@ Non-post data (categories, projects, site info) lives in typed TypeScript files 
 - Every push to the main branch deploys to production; other branches and PRs get preview URLs.
 - Set `site` in `astro.config.mjs` to the production URL (initially `https://<project>.vercel.app`, later the custom domain) so RSS, sitemap, and canonical URLs are correct.
 - No environment variables or serverless functions are required. Keep it that way.
+- Analytics: Vercel Web Analytics via `@vercel/analytics`, whose `<Analytics />` component is rendered in `BaseLayout`'s `<head>`. It only records data once Analytics is enabled for the project in the Vercel dashboard; locally it runs in debug mode and sends nothing.
 - Custom domain is optional and the only potential cost.
 
 ## Quality bar

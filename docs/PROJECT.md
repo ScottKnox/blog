@@ -51,11 +51,13 @@ Do not build these unless explicitly requested: user accounts, comments, a CMS o
 ### SEO and sharing
 Per-page title, meta description, canonical URL, and Open Graph/Twitter tags (using the post's hero image if present, otherwise a default).
 
+### Analytics
+Vercel Web Analytics (free tier): cookieless page-view counts, no cookie banner needed. Its small script is the site's only client JavaScript; pages work fully without it.
+
 ### Not in the MVP (add only if requested)
 - Light theme or theme toggle
 - Full-text search (Pagefind, static)
 - Auto-generated Open Graph images
-- Analytics (Vercel Web Analytics free tier would be the first choice)
 - Comments (e.g. giscus)
 - Tag pages
 
