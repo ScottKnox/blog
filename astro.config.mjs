@@ -11,8 +11,8 @@ const postDates = getPostLastModified();
 
 // https://astro.build/config
 export default defineConfig({
-  // Canonical site URL: update to the real Vercel/custom domain URL.
-  site: 'https://your-blog.vercel.app',
+  // Canonical site URL used for canonical links, RSS, and the sitemap.
+  site: 'https://scottdiesel.dev',
   // Canonical URLs, links, and the sitemap all use no trailing slash.
   trailingSlash: 'never',
   output: 'static',
